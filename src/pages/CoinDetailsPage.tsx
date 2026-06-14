@@ -88,7 +88,10 @@ function CoinDetails({ coin, currency }: { coin: CoinMarket; currency: string })
         sx={{
           display: "grid",
           gap: 2,
-          gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(3, 1fr)" },
+          gridTemplateColumns: {
+            xs: "repeat(2, minmax(0, 1fr))",
+            sm: "repeat(3, minmax(0, 1fr))",
+          },
         }}
       >
         {stats.map((stat) => (
@@ -96,7 +99,10 @@ function CoinDetails({ coin, currency }: { coin: CoinMarket; currency: string })
             <Typography variant="caption" color="text.secondary">
               {stat.label}
             </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 600, fontSize: { xs: "1rem", sm: "1.25rem" } }}
+            >
               {stat.value}
             </Typography>
           </Paper>
