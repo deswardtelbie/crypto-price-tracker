@@ -1,6 +1,7 @@
 import { getCurrency } from "./currencies";
 
-export function formatPrice(value: number, currencyCode: string): string {
+export function formatPrice(value: number | null | undefined, currencyCode: string): string {
+  if (value == null) return "—";
   const currency = getCurrency(currencyCode);
   const maximumFractionDigits = Math.abs(value) < 1 ? 6 : 2;
 
@@ -18,7 +19,8 @@ export function formatPrice(value: number, currencyCode: string): string {
   }).format(value);
 }
 
-export function formatCompact(value: number, currencyCode: string): string {
+export function formatCompact(value: number | null | undefined, currencyCode: string): string {
+  if (value == null) return "—";
   const currency = getCurrency(currencyCode);
 
   if (currency.type === "crypto") {
