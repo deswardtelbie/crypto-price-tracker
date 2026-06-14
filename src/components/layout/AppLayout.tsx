@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import {
   AppBar,
   Box,
+  CircularProgress,
   Container,
   Link as MuiLink,
   Toolbar,
@@ -36,7 +38,15 @@ export function AppLayout() {
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ flexGrow: 1, py: 3 }}>
-        <Outlet />
+        <Suspense
+          fallback={
+            <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>
+              <CircularProgress />
+            </Box>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </Container>
     </Box>
   );

@@ -1,7 +1,11 @@
+import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AppLayout } from "./components/layout/AppLayout";
 import { DashboardPage } from "./pages/DashboardPage";
-import { CoinDetailsPage } from "./pages/CoinDetailsPage";
+
+const CoinDetailsPage = lazy(() =>
+  import("./pages/CoinDetailsPage").then((m) => ({ default: m.CoinDetailsPage })),
+);
 
 function App() {
   return (
