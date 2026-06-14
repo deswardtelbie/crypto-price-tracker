@@ -38,6 +38,11 @@ export function formatCompact(value: number | null | undefined, currencyCode: st
   }).format(value);
 }
 
+export function formatNumber(value: number | null | undefined): string {
+  if (value == null) return "—";
+  return value.toLocaleString("en-US", { notation: "compact", maximumFractionDigits: 2 });
+}
+
 export function formatPercent(value: number): string {
   const sign = value > 0 ? "+" : "";
   return `${sign}${value.toFixed(2)}%`;

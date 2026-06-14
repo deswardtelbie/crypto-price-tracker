@@ -23,3 +23,8 @@ export interface MarketsQueryArgs {
   page?: number;
   perPage?: number;
 }
+
+export interface CoinQueryArgs {
+  id: string;
+  vsCurrency: string;
+}
