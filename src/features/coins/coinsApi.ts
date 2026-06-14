@@ -25,6 +25,13 @@ export const coinsApi = createApi({
           sparkline: false,
         },
       }),
+      serializeQueryArgs: ({ queryArgs: { vsCurrency, perPage } }) => ({ vsCurrency, perPage }),
+      merge: (cache, incoming, { arg }) => {
+        if (arg.page === 1) return incoming;
+        const seen = new Set(cache.map((coin) => coin.id));
+        cache.push(...incoming.filter((coin) => !seen.has(coin.id)));
+      },
+      forceRefetch: ({ currentArg, previousArg }) => currentArg?.page !== previousArg?.page,
     }),
     getCoin: builder.query<CoinMarket | undefined, CoinQueryArgs>({
       query: ({ id, vsCurrency }) => ({
