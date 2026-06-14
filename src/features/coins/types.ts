@@ -28,3 +28,20 @@ export interface CoinQueryArgs {
   id: string;
   vsCurrency: string;
 }
+
+export interface MarketChartArgs {
+  id: string;
+  vsCurrency: string;
+  days: number;
+}
+
+export interface MarketChartResponse {
+  prices: [number, number][];
+  market_caps: [number, number][];
+  total_volumes: [number, number][];
+}
+
+export interface PricePoint {
+  timestamp: number;
+  price: number;
+}

@@ -3,6 +3,7 @@ import { Alert, Avatar, Box, Button, Chip, Paper, Skeleton, Typography } from "@
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useAppSelector } from "../app/hooks";
 import { useGetCoinQuery } from "../features/coins/coinsApi";
+import { PriceChart } from "../features/coins/PriceChart";
 import type { CoinMarket } from "../features/coins/types";
 import { formatCompact, formatNumber, formatPercent, formatPrice } from "../lib/format";
 
@@ -101,6 +102,8 @@ function CoinDetails({ coin, currency }: { coin: CoinMarket; currency: string })
           </Paper>
         ))}
       </Box>
+
+      <PriceChart coinId={coin.id} currency={currency} />
     </Box>
   );
 }

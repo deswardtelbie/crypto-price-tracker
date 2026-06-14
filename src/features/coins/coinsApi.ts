@@ -1,5 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { CoinMarket, CoinQueryArgs, MarketsQueryArgs } from "./types";
+import type {
+  CoinMarket,
+  CoinQueryArgs,
+  MarketChartArgs,
+  MarketChartResponse,
+  MarketsQueryArgs,
+  PricePoint,
+} from "./types";
 
 const BASE_URL = "https://api.coingecko.com/api/v3";
 
@@ -26,7 +33,15 @@ export const coinsApi = createApi({
       }),
       transformResponse: (response: CoinMarket[]) => response[0],
     }),
+    getMarketChart: builder.query<PricePoint[], MarketChartArgs>({
+      query: ({ id, vsCurrency, days }) => ({
+        url: `/coins/${id}/market_chart`,
+        params: { vs_currency: vsCurrency, days },
+      }),
+      transformResponse: (response: MarketChartResponse) =>
+        response.prices.map(([timestamp, price]) => ({ timestamp, price })),
+    }),
   }),
 });
 
-export const { useGetMarketsQuery, useGetCoinQuery } = coinsApi;
+export const { useGetMarketsQuery, useGetCoinQuery, useGetMarketChartQuery } = coinsApi;
