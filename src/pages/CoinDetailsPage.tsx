@@ -6,6 +6,7 @@ import { useGetCoinQuery } from "../features/coins/coinsApi";
 import { PriceChart } from "../features/coins/PriceChart";
 import type { CoinMarket } from "../features/coins/types";
 import { formatCompact, formatNumber, formatPercent, formatPrice } from "../lib/format";
+import { LoadError } from "../components/LoadError";
 
 export function CoinDetailsPage() {
   const { id = "" } = useParams<{ id: string }>();
@@ -21,18 +22,7 @@ export function CoinDetailsPage() {
         Back
       </Button>
 
-      {isError && (
-        <Alert
-          severity="error"
-          action={
-            <Button color="inherit" size="small" onClick={() => refetch()}>
-              Retry
-            </Button>
-          }
-        >
-          Couldn't load coin data. CoinGecko's free API may be rate-limited — try again shortly.
-        </Alert>
-      )}
+      {isError && <LoadError subject="coin data" onRetry={refetch} />}
 
       {isSuccess && !coin && <Alert severity="warning">No coin found for "{id}".</Alert>}
 

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Alert, Box, Button, CircularProgress, Skeleton, Typography } from "@mui/material";
+import { Box, CircularProgress, Skeleton, Typography } from "@mui/material";
 import { useAppSelector } from "../app/hooks";
 import { useGetMarketsQuery } from "../features/coins/coinsApi";
 import { CoinsTable } from "../features/coins/CoinsTable";
+import { LoadError } from "../components/LoadError";
 
 const PER_PAGE = 50;
 
@@ -45,18 +46,7 @@ export function DashboardPage() {
         Ranked by market cap · prices in {currency.toUpperCase()}
       </Typography>
 
-      {isError && (
-        <Alert
-          severity="error"
-          action={
-            <Button color="inherit" size="small" onClick={() => refetch()}>
-              Retry
-            </Button>
-          }
-        >
-          Couldn't load market data. CoinGecko's free API may be rate-limited — try again shortly.
-        </Alert>
-      )}
+      {isError && <LoadError subject="market data" onRetry={refetch} />}
 
       {isLoading &&
         Array.from({ length: 10 }).map((_, index) => (

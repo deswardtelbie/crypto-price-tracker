@@ -1,8 +1,6 @@
 import { useState } from "react";
 import {
-  Alert,
   Box,
-  Button,
   Paper,
   Skeleton,
   ToggleButton,
@@ -22,6 +20,7 @@ import {
 import { useGetMarketChartQuery } from "./coinsApi";
 import type { PricePoint } from "./types";
 import { formatCompact, formatPrice } from "../../lib/format";
+import { LoadError } from "../../components/LoadError";
 
 const RANGES = [
   { label: "24H", days: 1 },
@@ -98,18 +97,7 @@ export function PriceChart({ coinId, currency }: PriceChartProps) {
         </ToggleButtonGroup>
       </Box>
 
-      {isError && (
-        <Alert
-          severity="error"
-          action={
-            <Button color="inherit" size="small" onClick={() => refetch()}>
-              Retry
-            </Button>
-          }
-        >
-          Couldn't load price history. CoinGecko's free API may be rate-limited — try again shortly.
-        </Alert>
-      )}
+      {isError && <LoadError subject="price history" onRetry={refetch} />}
 
       {isLoading && <Skeleton variant="rounded" height={320} />}
 
