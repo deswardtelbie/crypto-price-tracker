@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import { Link as RouterLink, Outlet } from "react-router-dom";
+import { CurrencySelector } from "../CurrencySelector";
 
 // Shared shell rendered around every route. Pages render into <Outlet />.
 export function AppLayout() {
@@ -31,7 +32,7 @@ export function AppLayout() {
             </Typography>
           </MuiLink>
           <Box sx={{ flexGrow: 1 }} />
-          {/* Currency selector is added to the header in a later commit. */}
+          <CurrencySelector />
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ flexGrow: 1, py: 3 }}>
