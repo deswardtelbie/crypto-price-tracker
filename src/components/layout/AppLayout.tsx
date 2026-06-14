@@ -12,7 +12,6 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import { Link as RouterLink, Outlet } from "react-router-dom";
 import { CurrencySelector } from "../CurrencySelector";
 
-// Shared shell rendered around every route. Pages render into <Outlet />.
 export function AppLayout() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
