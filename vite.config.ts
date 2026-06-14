@@ -3,7 +3,10 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  // Served from a sub-path on GitHub Pages in production, root in dev.
+  // Keyed off mode (not command) so `vite preview` also uses the base path.
+  base: mode === 'production' ? '/crypto-price-tracker/' : '/',
   plugins: [
     react(),
     VitePWA({
@@ -22,4 +25,4 @@ export default defineConfig({
       },
     }),
   ],
-})
+}))

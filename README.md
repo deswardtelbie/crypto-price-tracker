@@ -7,6 +7,8 @@ charts, and switch the display currency on the fly. Prices default to **ZAR**.
 Market data is provided by the free [CoinGecko public API](https://www.coingecko.com/en/api)
 (no API key required).
 
+**Live demo:** https://deswardtelbie.github.io/crypto-price-tracker/
+
 ## Features
 
 - **Dashboard** — top cryptocurrencies ranked by market cap, with current price and
