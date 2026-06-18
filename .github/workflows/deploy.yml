@@ -25,6 +25,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Demo (free) CoinGecko key.
+          VITE_CG_DEMO_KEY: ${{ secrets.CG_DEMO_KEY }}
       # GitHub Pages has no SPA fallback; serving index.html for 404s lets
       # client-side routes (e.g. /coins/bitcoin) resolve on refresh/deep-link.
       - run: cp dist/index.html dist/404.html
@@ -42,4 +45,3 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import type {
   CoinMarket,
   CoinQueryArgs,
@@ -10,9 +11,21 @@ import type {
 
 const BASE_URL = "https://api.coingecko.com/api/v3";
 
+// Optional Demo key for a higher rate limit.
+const DEMO_API_KEY = import.meta.env.VITE_CG_DEMO_KEY;
+
+const rawBaseQuery = fetchBaseQuery({ baseUrl: BASE_URL });
+
+// Key goes in a query param, not a header, to avoid a CORS preflight on every request.
+const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = (args, api, opts) => {
+  if (!DEMO_API_KEY) return rawBaseQuery(args, api, opts);
+  const req: FetchArgs = typeof args === "string" ? { url: args } : args;
+  return rawBaseQuery({ ...req, params: { ...req.params, x_cg_demo_api_key: DEMO_API_KEY } }, api, opts);
+};
+
 export const coinsApi = createApi({
   reducerPath: "coinsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery,
   endpoints: (builder) => ({
     getMarkets: builder.query<CoinMarket[], MarketsQueryArgs>({
       query: ({ vsCurrency, page = 1, perPage = 50 }) => ({

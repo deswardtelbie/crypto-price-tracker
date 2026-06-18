@@ -4,8 +4,9 @@ A live cryptocurrency price tracker built with React + TypeScript. Browse the to
 coins by market cap, drill into any coin for detailed stats and historical price
 charts, and switch the display currency on the fly. Prices default to **ZAR**.
 
-Market data is provided by the free [CoinGecko public API](https://www.coingecko.com/en/api)
-(no API key required).
+Market data is provided by the [CoinGecko API](https://www.coingecko.com/en/api). It runs
+without a key (lower rate limit), or with a free Demo key for a higher limit — see
+[API key](#api-key).
 
 **Live demo:** https://deswardtelbie.github.io/crypto-price-tracker/
 
@@ -52,7 +53,19 @@ npm install
 npm run dev
 ```
 
-That's it — no environment variables or API keys are needed.
+## API key
+
+CoinGecko works without a key (lower rate limit). For a higher limit, create a free
+**Demo** key at the [CoinGecko developer dashboard](https://www.coingecko.com/en/developers/dashboard):
+
+- **Local:** add `VITE_CG_DEMO_KEY=<key>` to `.env.local`.
+- **Production:** stored as the `CG_DEMO_KEY` GitHub Actions secret and injected at
+  build time by the [deploy workflow](.github/workflows/deploy.yml).
+
+A static site can't truly hide a key, so the deployed build exposes it. A backend
+proxy would be more secure — but for this assignment, and since it's a free Demo key
+(no billing, easily rotated), we've intentionally skipped that extra layer to keep
+the live demo simple.
 
 ## Available scripts
 
@@ -79,8 +92,9 @@ src/
 
 ## Notes
 
-- **Rate limits** — the CoinGecko free tier is rate-limited. If a request is throttled
-  the UI shows a retry prompt; wait a moment and try again.
+- **Rate limits** — CoinGecko is rate-limited (lower without a key, higher with a Demo
+  key — see [API key](#api-key)). If a request is throttled the UI shows a retry
+  prompt; wait a moment and try again.
 - **Currency persistence** — the selected currency is saved to `localStorage`, so it
   survives reloads.
 </content>
